@@ -1,5 +1,6 @@
 document.getElementById("btn-submit").addEventListener("click",()=>{
     
+    let name=document.getElementById("name").value
     let username=document.getElementById("username").value
     let Password=document.getElementById("password").value
 
@@ -8,17 +9,19 @@ document.getElementById("btn-submit").addEventListener("click",()=>{
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
-        username,Password
+        name,username,Password
     })
   })
-    .then((res) => {
-      if(res.status==201)
+    .then(async(res) => {
+      const data=await res.json();
+      if(res.status!==404)
       {
         alert("Registration Succesfull")
+        window.location.href="./index.html"
       }
       else
       {
-        alert("Registration Failed")
+        alert(data.msg)
       }
     })
     .catch((error)=>{alert("server not connected")})
